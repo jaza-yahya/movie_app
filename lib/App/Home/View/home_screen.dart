@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          forceMaterialTransparency: true,
           title: const Text(
             "Trending Movies",
             style: TextStyle(
