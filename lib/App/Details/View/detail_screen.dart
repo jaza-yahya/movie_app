@@ -18,6 +18,7 @@ class DetailsScreen extends StatelessWidget {
         ),
       ),
       child: Scaffold(
+        
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
