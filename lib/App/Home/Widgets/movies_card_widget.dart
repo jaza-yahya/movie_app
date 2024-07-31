@@ -1,8 +1,9 @@
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:movieapp/App/Details/View/detail_screen.dart';
+import 'package:movieapp/App/Home/Widgets/image_Widget.dart';
 import 'package:movieapp/Router/router.dart';
 import 'package:movieapp/Shared/Models/discover_movies_model.dart';
 import 'package:movieapp/Shared/Providers/movies_provider.dart';
@@ -23,17 +24,15 @@ class MoviesCardWidget extends StatelessWidget {
     final genres = getGenresById(context.read<MoviesProvider>().getGenres, movie.genreIds??[]);
     return InkWell(
       onTap: () {
-        router.push(DetailsScreen.routeName);
+        router.push(DetailsScreen.routeName,extra:movie.id);
       },
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            // clipBehavior: Clip.hardEdge,
-            child: Image.network(
-              "$imageBaseUrl${movie.posterPath}",
-              width: scrennWidth(context) * 0.3,
-            ),
+          ImageWidget(
+           imageUrl:"$imageBaseUrl${movie.posterPath}",
+            width: scrennWidth(context) * 0.3,
+            height: scrennWidth(context) * 0.45,
+            borderRadius:10,
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -50,9 +49,13 @@ class MoviesCardWidget extends StatelessWidget {
                  
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  "${movie.releaseDate?.year}",
-                  style: Theme.of(context).textTheme.bodyMedium,
+                Wrap(
+                  children: [
+                    Text(
+                      "${movie.releaseDate?.year}",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 8),
                 Text(
@@ -60,9 +63,25 @@ class MoviesCardWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  "2h 32min",
-                  style: Theme.of(context).textTheme.bodyMedium,
+                
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Popularity: ",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                        NumberFormat.decimalPattern("en_us").format(movie.popularity?.round()),
+                       
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
                 ),
                 
                 const SizedBox(height: 16),
@@ -76,7 +95,7 @@ class MoviesCardWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child:  Text(
-                        "${movie.voteCount}",
+                        NumberFormat.compact().format(movie.voteCount),
                         style: const TextStyle(color: Colors.black87,
                         fontWeight: FontWeight.w600,
                         ),

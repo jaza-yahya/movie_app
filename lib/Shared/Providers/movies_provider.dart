@@ -34,6 +34,21 @@ class MoviesProvider extends ChangeNotifier {
     final movies = await MoviesService().getMovies();
     setMovies(movies);
   }
+  /////////////////////////////
+  ///////////MOVIE DETAILS
+  
+  MovieDetailsModel _movieDetails = MovieDetailsModel();
+  MovieDetailsModel get getMovieDetails => _movieDetails;
+
+  void setMovieDetails(MovieDetailsModel movieDetails) { 
+    _movieDetails = movieDetails;
+    notifyListeners();
+  }
+
+  Future<void> fetchMovieDetails(int movieId) async {
+    final movieDetails = await MoviesService().getMovieDetails(movieId);
+    setMovieDetails(movieDetails);
+  }
 
 
   

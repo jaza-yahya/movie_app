@@ -1,13 +1,15 @@
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:movieapp/Shared/Models/movie_details_model.dart';
 
 class DetailsWidget extends StatelessWidget {
   const DetailsWidget({
     super.key,
+    required this.movie,
   });
+  final MovieDetailsModel movie;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class DetailsWidget extends StatelessWidget {
         const SizedBox(height: 16),
         Center(
           child: Text(
-            "The Dark Knight",
+           movie.title??'',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -28,7 +30,7 @@ class DetailsWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Action, Crime, Thriller",
+              movie.genres?.map((e) => e.name).join(", ") ?? "",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(
@@ -40,21 +42,21 @@ class DetailsWidget extends StatelessWidget {
               ),
             ),
             Text(
-              DateFormat('MMM, yyyy').format(DateTime.now()),
+              DateFormat('MMM, yyyy').format(movie.releaseDate ?? DateTime.now()),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            const SizedBox(
-              height: 12,
-              child: VerticalDivider(
-                color: Colors.grey,
-                width: 32,
-                thickness: 2,
-              ),
-            ),
-            Text(
-              "2h 32min",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            // const SizedBox(
+            //   height: 12,
+            //   child: VerticalDivider(
+            //     color: Colors.grey,
+            //     width: 32,
+            //     thickness: 2,
+            //   ),
+            // ),
+            // Text(
+            //   "2h 32min",
+            //   style: Theme.of(context).textTheme.bodyMedium,
+            // ),
           ],
         ),
         const SizedBox(height: 16),
@@ -67,9 +69,9 @@ class DetailsWidget extends StatelessWidget {
                 color: Colors.amber,
                 borderRadius: BorderRadius.circular(4),
               ),
-              child: const Text(
-                "HD",
-                style: TextStyle(
+              child:  Text(
+                NumberFormat.compact().format(movie.voteCount),
+                style: const TextStyle(
                   color: Colors.black87,
                   fontWeight: FontWeight.w600,
                 ),
@@ -91,7 +93,7 @@ class DetailsWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    (Random().nextDouble() * 9.0).toStringAsFixed(1),
+                    "${movie.voteAverage?.toStringAsFixed(1)}",
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.black87,
                         ),
@@ -110,19 +112,21 @@ class DetailsWidget extends StatelessWidget {
               ),
         ),
         const SizedBox(height: 8),
-        const Text(
-          "When Batman, Gordon and Harvey Dent successfully confront the corrupt mayor of an American city, they must train a group of deceptively trained criminals to compete in the city's underworld.When Batman, Gordon and Harvey Dent successfully confront the corrupt mayor of an American city, they must train a group of deceptively trained criminals to compete in the city's underworld.When Batman, Gordon and Harvey Dent successfully confront the corrupt mayor of an American city, they must train a group of deceptively trained criminals to compete in the city's underworld.When Batman, Gordon and Harvey Dent successfully confront the corrupt mayor of an American city, they must train a group of deceptively trained ",
+         Text(
+          movie.overview ?? "",
         ),
         const SizedBox(height: 32),
         Text(
-          "Cast",
+          "Tagline",
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w500,
                 fontSize: 20,
               ),
         ),
         const SizedBox(height: 8),
-        const Text("Will Smith, Margot Robbie, ..."),
+         Text(movie.tagline ?? "",
+          style: Theme.of(context).textTheme.bodyMedium,
+          ),
          const SizedBox(height: 16),
         Text(
           "Budget",
@@ -133,7 +137,7 @@ class DetailsWidget extends StatelessWidget {
         ),
         const SizedBox(height: 8),
          Text(
-          NumberFormat.currency(symbol: "\$", decimalDigits: 0).format(100000000),
+          NumberFormat.currency(symbol: "\$", decimalDigits: 0).format(movie.budget ?? 0),
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(height: 16),
@@ -146,7 +150,7 @@ class DetailsWidget extends StatelessWidget {
         ),
         const SizedBox(height: 8),
          Text(
-          NumberFormat.currency(symbol: "\$", decimalDigits: 0).format(100000000),
+          NumberFormat.currency(symbol: "\$", decimalDigits: 0).format(movie.revenue ?? 0),
           style: Theme.of(context).textTheme.bodyMedium,
          ),
         const SizedBox(height: 16),
@@ -158,7 +162,8 @@ class DetailsWidget extends StatelessWidget {
               ),
         ),
         const SizedBox(height: 8),
-         Text("English",
+         Text(
+          movie.spokenLanguages?.map((e) => e.name).join(", ") ?? "",
         style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(height: 16),
@@ -170,7 +175,8 @@ class DetailsWidget extends StatelessWidget {
               ),
         ),
         const SizedBox(height: 8),
-         Text("Warner Bros. Pictures",
+         Text(
+          movie.productionCompanies?.map((e) => e.name).join(", ") ?? "",
         style: Theme.of(context).textTheme.bodyMedium,
          ),
         

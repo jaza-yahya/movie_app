@@ -15,7 +15,7 @@ class MoviesService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${Api.token}',
       };
-      final response = await http.get(Api.getGenres.toUri(), headers: headers);
+      final response = await http.get(Api.getGenres, headers: headers);
       if (response.statusCode == 200) {
         debugPrint("GET GENRES SUCCESS");
         final data = jsonDecode(response.body);
@@ -47,7 +47,7 @@ class MoviesService {
         "language": "en-US",
       };
       final response = await http.get(
-        Api.getTrendingMovies.toUri().replace(queryParameters: queryParams),
+        Api.getTrendingMovies.replace(queryParameters: queryParams),
         headers: headers,
       );
       if (response.statusCode == 200) {
@@ -62,5 +62,33 @@ class MoviesService {
       debugPrint(e.toString());
     }
     return movies;
+  }
+  /////////////////////////////
+  ////////////
+  ///GET MOVIE DETAILS
+  Future<MovieDetailsModel> getMovieDetails(int id) async {
+    MovieDetailsModel movieDetails = MovieDetailsModel();
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${Api.token}',
+      };
+     
+      final response = await http.get(
+        Api.movieDetails.resolve("movie/${id.toString()}"),
+        headers: headers,
+      );
+      if (response.statusCode == 200) {
+        debugPrint("GET MOVIE DETAILS SUCCESS");
+        final data = jsonDecode(response.body);
+        movieDetails = MovieDetailsModel.fromJson(data);
+        debugPrint("MOVIE DETAILS: $movieDetails.");
+      } else {
+        debugPrint("GET MOVIE DETAILS FAILED ${response.body}");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return movieDetails;
   }
 }

@@ -42,6 +42,10 @@ dependencies:
   firebase_core: any
   logger: any
   shared_preferences: any
+  connectivity_plus: any
+  internet_connection_checker_plus: any
+  cached_network_image: any
+  flutter_cache_manager: any
 
 dev_dependencies:
   flutter_test:

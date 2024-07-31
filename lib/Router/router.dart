@@ -7,15 +7,36 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation:HomeScreen.routeName,
+  initialLocation: HomeScreen.routeName,
   routes: [
     GoRoute(
       path: HomeScreen.routeName,
-      builder: (context, state) => const HomeScreen(),
+      
+      pageBuilder: (context, state) =>  CustomTransitionPage(
+        transitionDuration: const Duration(milliseconds: 300),
+        reverseTransitionDuration: const Duration(milliseconds: 300),
+        transitionsBuilder:(context, animation, secondaryAnimation, child) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        child: const HomeScreen(),
+      ),
     ),
     GoRoute(
       path: DetailsScreen.routeName,
-      builder: (context, state) => const DetailsScreen(),
+      pageBuilder: (context, state) 
+      {
+        final movieId = state.extra as int;
+        return CustomTransitionPage(
+        transitionDuration: const Duration(milliseconds: 300),
+        reverseTransitionDuration: const Duration(milliseconds: 300),
+        transitionsBuilder:(context, animation, secondaryAnimation, child) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        child:  DetailsScreen(
+          movieId: movieId,
+        ),
+      );
+      }  
     ),
   ],
 );
