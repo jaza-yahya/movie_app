@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:movieapp/App/Details/View/detail_screen.dart';
-import 'package:movieapp/App/Home/Widgets/image_Widget.dart';
+import 'package:movieapp/App/Home/Widgets/image_widget.dart';
 import 'package:movieapp/Router/router.dart';
 import 'package:movieapp/Shared/Models/discover_movies_model.dart';
 import 'package:movieapp/Shared/Providers/movies_provider.dart';

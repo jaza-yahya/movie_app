@@ -6,6 +6,7 @@ final theme = ThemeData(
   primaryColor: Colors.black87,
   appBarTheme: const AppBarTheme(
     surfaceTintColor:Colors.transparent,
+    backgroundColor:Colors.white,
   
   ),
   textTheme:  TextTheme(

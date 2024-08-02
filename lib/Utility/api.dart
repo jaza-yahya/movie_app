@@ -11,6 +11,7 @@ class Api {
   static Uri get getGenres => "$baseUrl/genre/movie/list".toUri();
   static Uri get getTrendingMovies => "$baseUrl/discover/movie".toUri();
   static Uri get movieDetails => "$baseUrl/movie".toUri();
+  static Uri get searchMovies => "$baseUrl/search/movie".toUri();
 
 
 }

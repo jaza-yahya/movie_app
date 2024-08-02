@@ -14,6 +14,8 @@ class NetworkProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  
+
   Future<bool> checkInternetConnection() async {
    
 bool hasInternetConnection = await InternetConnection().hasInternetAccess;
@@ -24,6 +26,22 @@ bool hasInternetConnection = await InternetConnection().hasInternetAccess;
     return hasInternetConnection;
   }
 
+  void listenToInternet() {
+    InternetConnection().onStatusChange.listen((status) {
+      switch (status) {
+        case InternetStatus.connected:
+        debugPrint("CONNECTED");
+          setIsConnected(true);
+          break;
+        case InternetStatus.disconnected:
+        debugPrint("NOT CONNECTED");
+
+          setIsConnected(false);
+          break;
+      }
+    });
+  }
+//////////////////////////////////////////////
   Future<ConnectivityResult> checkConnectivity() async {
     final List<ConnectivityResult> connectivityResult =
         await (Connectivity().checkConnectivity());

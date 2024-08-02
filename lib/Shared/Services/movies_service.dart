@@ -33,7 +33,7 @@ class MoviesService {
   ///////////////////////////////////////////
   ////////////////////////////////////////////
   ///GET MOVIES
-  Future<MoviesDiscoverModel> getMovies() async {
+  Future<MoviesDiscoverModel> getMovies({required int page}) async {
     MoviesDiscoverModel movies = MoviesDiscoverModel();
     try {
       final headers = {
@@ -41,7 +41,7 @@ class MoviesService {
         'Authorization': 'Bearer ${Api.token}',
       };
       final queryParams = {
-        'page': "1",
+        'page': page.toString(),
         "include_adult": "false",
         "include_video": "false",
         "language": "en-US",
@@ -90,5 +90,37 @@ class MoviesService {
       debugPrint(e.toString());
     }
     return movieDetails;
+  }
+  //////////////////////////////////////
+  ///////////SEARCH MOVIES
+  Future<MoviesDiscoverModel> searchMovies({required String query}) async {
+    MoviesDiscoverModel movies = MoviesDiscoverModel();
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${Api.token}',
+      };
+      final queryParams = {
+        "query": query,
+        'page': "1",
+        "include_adult": "false",
+        "language": "en-US",
+      };
+      final response = await http.get(
+        Api.searchMovies.replace(queryParameters: queryParams),
+        headers: headers,
+      );
+      if (response.statusCode == 200) {
+        debugPrint("SEARCH MOVIES SUCCESS");
+        final data = jsonDecode(response.body);
+        movies = MoviesDiscoverModel.fromJson(data);
+        debugPrint("MOVIES: ${movies.movies}.");
+      } else {
+        debugPrint("SEARCH MOVIES FAILED");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return movies;
   }
 }

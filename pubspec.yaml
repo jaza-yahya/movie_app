@@ -46,6 +46,8 @@ dependencies:
   internet_connection_checker_plus: any
   cached_network_image: any
   flutter_cache_manager: any
+  syncfusion_flutter_datagrid: ^26.2.7
+  syncfusion_flutter_core: ^26.2.7
 
 dev_dependencies:
   flutter_test:

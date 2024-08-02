@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:movieapp/Router/router.dart';
+import 'package:movieapp/Shared/Providers/network_provider.dart';
 import 'package:movieapp/Theme/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -33,17 +34,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
-    
     super.initState();
+    NetworkProvider.to.listenToInternet();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme:theme,
+      theme: theme,
       themeMode: ThemeMode.light,
       routerConfig: router,
     );
