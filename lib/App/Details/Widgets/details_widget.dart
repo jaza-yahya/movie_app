@@ -26,38 +26,45 @@ class DetailsWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              movie.genres?.map((e) => e.name).join(", ") ?? "",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(
-              height: 12,
-              child: VerticalDivider(
-                color: Colors.grey,
-                width: 32,
-                thickness: 2,
+        SizedBox(
+          width:double.maxFinite,
+          child: Wrap(
+            
+            runAlignment: WrapAlignment.center,
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                movie.genres?.map((e) => e.name).join(", ") ?? "",
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
-            ),
-            Text(
-              DateFormat('MMM, yyyy').format(movie.releaseDate ?? DateTime.now()),
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            // const SizedBox(
-            //   height: 12,
-            //   child: VerticalDivider(
-            //     color: Colors.grey,
-            //     width: 32,
-            //     thickness: 2,
-            //   ),
-            // ),
-            // Text(
-            //   "2h 32min",
-            //   style: Theme.of(context).textTheme.bodyMedium,
-            // ),
-          ],
+              const SizedBox(
+                height: 12,
+                child: VerticalDivider(
+                  color: Colors.grey,
+                  width: 32,
+                  thickness: 2,
+                ),
+              ),
+              Text(
+                DateFormat('MMM, yyyy').format(movie.releaseDate ?? DateTime.now()),
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              // const SizedBox(
+              //   height: 12,
+              //   child: VerticalDivider(
+              //     color: Colors.grey,
+              //     width: 32,
+              //     thickness: 2,
+              //   ),
+              // ),
+              // Text(
+              //   "2h 32min",
+              //   style: Theme.of(context).textTheme.bodyMedium,
+              // ),
+            ],
+          ),
         ),
         const SizedBox(height: 16),
         Row(

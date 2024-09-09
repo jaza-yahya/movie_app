@@ -110,6 +110,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     expandedHeight: scrennWidth(context),
                     flexibleSpace: FlexibleSpaceBar(
                       background: ImageWidget(
+                        borderRadius: 0,
                         imageUrl:
                             "$imageBaseUrl${moviesProvider.getMovieDetails?.posterPath}",
                         fit: BoxFit.cover,

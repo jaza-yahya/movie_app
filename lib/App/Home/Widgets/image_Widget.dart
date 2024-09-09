@@ -86,8 +86,11 @@ class ImageWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // placeholder: (context, url) =>
-                  //     placeholder ?? const Icon(Icons.image),
+                  placeholder: (context, url) =>
+                      placeholder ?? const Icon(Icons.image,
+                      color: Colors.black38,
+                      
+                      ),
                   errorWidget: placeholder != null
                       ? (context, url, error) => placeholder!
                       : (context, url, error) =>
