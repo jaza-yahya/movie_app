@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-
 class ImageWidget extends StatelessWidget {
   const ImageWidget({
     super.key,
@@ -87,14 +86,29 @@ class ImageWidget extends StatelessWidget {
                     ),
                   ),
                   placeholder: (context, url) =>
-                      placeholder ?? const Icon(Icons.image,
-                      color: Colors.black38,
-                      
+                      placeholder ??
+                      const Icon(
+                        Icons.image,
+                        color: Colors.black38,
                       ),
                   errorWidget: placeholder != null
                       ? (context, url, error) => placeholder!
-                      : (context, url, error) =>
-                          placeholder ?? const Icon(Icons.error, color: Colors.red),
+                      : (context, url, error) => Container(
+                            width: width,
+                            height: height,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              border: border,
+                              borderRadius: isCircle
+                                  ? null
+                                  : BorderRadius.circular(borderRadius),
+                              shape: isCircle
+                                  ? BoxShape.circle
+                                  : BoxShape.rectangle,
+                            ),
+                            child: placeholder ??
+                                const Icon(Icons.error, color: Colors.red),
+                          ),
                   cacheManager: CacheManager(
                     Config(
                       imageUrl ?? '',
