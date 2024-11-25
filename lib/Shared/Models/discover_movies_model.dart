@@ -29,7 +29,8 @@ class MoviesDiscoverModel {
         movies: json["results"] == null
             ? []
             : List<MovieModel>.from(
-                json["results"]!.map((x) => MovieModel.fromJson(x))),
+                json["results"]!.map((x) => MovieModel.fromJson(x)),
+              ),
         totalPages: json["total_pages"],
         totalResults: json["total_results"],
       );

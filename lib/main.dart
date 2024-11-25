@@ -47,6 +47,7 @@ class _MyAppState extends State<MyApp> {
       theme: theme,
       themeMode: ThemeMode.light,
       routerConfig: router,
+    
     );
   }
 }

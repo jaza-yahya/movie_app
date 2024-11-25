@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-             router.push(SearchPage.routeName);
+              router.push(SearchPage.routeName);
             },
             icon: const Icon(
               CupertinoIcons.search,
@@ -91,7 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
             }
             return Stack(
               children: [
-                if (moviesProvider.getMovies?.movies != null && moviesProvider.getMovies?.movies?.isNotEmpty == true)
+                if (moviesProvider.getMovies?.movies != null &&
+                    moviesProvider.getMovies?.movies?.isNotEmpty == true)
                   ListView.separated(
                     itemCount: moviesProvider.getMovies?.movies?.length ?? 0,
                     padding: const EdgeInsets.only(
@@ -105,18 +106,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   )
-                  else
+                else
                   Center(
                     child: Text(
                       "No movies found",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.black87
-                        
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: Colors.black87),
                     ),
                   ),
                 Positioned(
-                  bottom: 0,
+                  bottom: 16,
                   left: 0,
                   right: 0,
                   child: PaginatorWidget(
