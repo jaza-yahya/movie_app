@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,20 +20,22 @@ class MoviesCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final genres = getGenresById(context.read<MoviesProvider>().getGenres, movie.genreIds??[]);
+    final genres = getGenresById(
+        context.read<MoviesProvider>().getGenres, movie.genreIds ?? []);
     return InkWell(
       onTap: () {
-        router.push(DetailsScreen.routeName,extra:movie.id);
+        router.push(DetailsScreen.routeName, extra: movie.id);
       },
       child: Row(
+        spacing: 16,
         children: [
           ImageWidget(
-           imageUrl:"$imageBaseUrl${movie.posterPath}",
+            imageUrl: "$imageBaseUrl${movie.posterPath}",
             width: scrennWidth(context) * 0.3,
             height: scrennWidth(context) * 0.45,
-            borderRadius:10,
+            borderRadius: 10,
           ),
-          const SizedBox(width: 16),
+          // const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,10 +44,9 @@ class MoviesCardWidget extends StatelessWidget {
                 Text(
                   "${movie.title}",
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                 
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
                 const SizedBox(height: 4),
                 Wrap(
@@ -63,48 +63,44 @@ class MoviesCardWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 8),
-                
                 Text.rich(
                   TextSpan(
                     children: [
                       TextSpan(
                         text: "Popularity: ",
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black87
-                        ),
+                            fontWeight: FontWeight.w600, color: Colors.black87),
                       ),
                       TextSpan(
-                        text:
-                        NumberFormat.decimalPattern("en_us").format(movie.popularity?.round()),
-                       
+                        text: NumberFormat.decimalPattern("en_us")
+                            .format(movie.popularity?.round()),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
                   ),
                 ),
-                
                 const SizedBox(height: 16),
                 Row(
                   children: [
                     Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.amber,
                         borderRadius: BorderRadius.circular(4),
                       ),
-                      child:  Text(
+                      child: Text(
                         NumberFormat.compact().format(movie.voteCount),
-                        style: const TextStyle(color: Colors.black87,
-                        fontWeight: FontWeight.w600,
+                        style: const TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                     const SizedBox(width: 8),
                     Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.amber,
                         borderRadius: BorderRadius.circular(4),
@@ -119,7 +115,10 @@ class MoviesCardWidget extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             "${movie.voteAverage?.toStringAsFixed(1)}",
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
                                   color: Colors.black87,
                                 ),
                           ),
@@ -128,7 +127,6 @@ class MoviesCardWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-             
               ],
             ),
           )

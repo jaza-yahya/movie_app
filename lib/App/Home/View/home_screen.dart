@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movieapp/App/Home/Widgets/image_Widget.dart';
 import 'package:movieapp/App/Home/Widgets/paginator_widget.dart';
 import 'package:movieapp/App/Search/search_page.dart';
 import 'package:movieapp/Router/router.dart';
@@ -11,6 +12,7 @@ import 'package:movieapp/Shared/Providers/network_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../Shared/Providers/movies_provider.dart';
+import '../../../Utility/api.dart';
 import '../Widgets/movies_card_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final Completer _completer = Completer();
   final DataPagerController _dataPagerController = DataPagerController();
+  final CarouselController controller = CarouselController(initialItem: 1);
   int? totalPages;
   @override
   void initState() {
@@ -93,18 +96,61 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 if (moviesProvider.getMovies?.movies != null &&
                     moviesProvider.getMovies?.movies?.isNotEmpty == true)
-                  ListView.separated(
-                    itemCount: moviesProvider.getMovies?.movies?.length ?? 0,
-                    padding: const EdgeInsets.only(
-                        top: 16, bottom: 64, left: 16, right: 16),
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 16),
-                    itemBuilder: (context, index) {
-                      final movie = moviesProvider.getMovies?.movies![index];
-                      return MoviesCardWidget(
-                        movie: movie ?? MovieModel(),
-                      );
-                    },
+                  CustomScrollView(
+                    slivers: [
+                      SliverAppBar(
+                        pinned: false,
+                        expandedHeight: 300,
+                        flexibleSpace: SizedBox(
+                          // color: Colors.amber,
+                          height: 300,
+                          child: CarouselView.weighted(
+                            controller: controller,
+                            // itemExtent: 280,
+                            itemSnapping: true,
+
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            flexWeights: const [2, 7, 2],
+                            children: List.generate(
+                              10,
+                              (index) {
+                                final movie =
+                                    moviesProvider.getMovies?.movies?[index];
+                                return ImageWidget(
+                                  imageUrl: "$imageBaseUrl${movie?.posterPath}",
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  fit: BoxFit.cover,
+                                  borderRadius: 0,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount:
+                              moviesProvider.getMovies?.movies?.length ?? 0,
+                          padding: const EdgeInsets.only(
+                              top: 16, bottom: 64, left: 16, right: 16),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 16),
+                          itemBuilder: (context, index) {
+                            final movie =
+                                moviesProvider.getMovies?.movies![index];
+                            return MoviesCardWidget(
+                              movie: movie ?? MovieModel(),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   )
                 else
                   Center(
@@ -135,6 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     _dataPagerController.dispose();
+    controller.dispose();
     super.dispose();
   }
 }
